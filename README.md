@@ -1,4 +1,4 @@
-# kanji-mem
+# 漢字mem
 
 ## Project setup
 ```
