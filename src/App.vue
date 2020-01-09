@@ -153,9 +153,8 @@ export default {
       for(let kanji of kanjiList2) {
         kanji.type = 'kanji';
       }
-      kanjiList1 = this.shuffleArray(kanjiList1)
-      kanjiList2 = this.shuffleArray(kanjiList2)
-      this.boardSetup = kanjiList1.concat(kanjiList2);
+
+      this.boardSetup = this.shuffleArray(kanjiList1.concat(kanjiList2));
 
       setTimeout(() => {
         for(let kanji of this.boardSetup) {
@@ -164,7 +163,7 @@ export default {
           }
         }
         this.gamePhase = 1;
-      }, 7000); // update startNewGame function in Nav comp too
+      }, 7000);
 
     },
     cardFlipped(event) {
@@ -209,6 +208,8 @@ export default {
     margin: 2em auto;
     padding: 5px;
     /* border: 1px solid #c8c8c8; */
+    width: 100%;
+    max-width: 970px;
     background-color: #3f51b5;
     box-sizing: border-box;
   }

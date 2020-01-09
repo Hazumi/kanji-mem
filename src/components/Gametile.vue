@@ -37,7 +37,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: calc(16.667% - 10px);
+    width: calc(50% - 10px);
     height: 150px;
     border: 1px solid #c8c8c8;
     font-size: 2.5em;
@@ -46,6 +46,30 @@ export default {
   .gameboard__tile:hover {
     cursor: pointer;
     background-color: #f9f9f9;
+  }
+
+  @media screen and (min-width: 600px) {
+    .gameboard__tile {
+      width: calc(33.3334% - 10px);
+    }
+  }
+
+  @media screen and (min-width: 800px) {
+    .gameboard__tile {
+      width: calc(25% - 10px);
+    }
+  }
+
+  @media screen and (min-width: 900px) {
+    .gameboard__tile {
+      width: calc(20% - 10px);
+    }
+  }
+
+  @media screen and (min-width: 1264px) {
+    .gameboard__tile {
+      width: calc(16.6667% - 10px);
+    }
   }
 
 </style>
