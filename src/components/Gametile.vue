@@ -1,12 +1,10 @@
 <template lang="html">
-  <div name="fade" @click="cardFlipped">
-
+  <v-card v-ripple tile @click="cardFlipped" class="indigo--text">
     <div v-if="kanji.show">
       <p v-if="kanji.type == 'reading'">{{ kanji.reading }}</p>
       <p v-else>{{ kanji.kanji }}</p>
     </div>
-
-  </div>
+  </v-card>
 </template>
 
 <script>
@@ -35,13 +33,15 @@ export default {
 <style lang="css" scoped>
 
   .gameboard__tile {
+    margin: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 150px;
+    width: calc(16.667% - 10px);
     height: 150px;
     border: 1px solid #c8c8c8;
     font-size: 2.5em;
+    color: #3f51b5;
   }
   .gameboard__tile:hover {
     cursor: pointer;

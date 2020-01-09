@@ -1,35 +1,28 @@
 <template>
-  <div id="app">
-    <app-nav @newGameStarted="startNewGame"></app-nav>
-
-    <div class="container" v-if="gameActive">
-      <div class="row">
-        <div class="col-12 text-center">
-
-          <div class="gameboard">
-            <app-gametile
-              v-for="kanji in boardSetup"
-              class="gameboard__tile"
-              :key="kanji.id + kanji.type"
-              :kanji="kanji"
-              :gamePhase="gamePhase"
-              :cardsFlipped="cardsFlipped"
-              :numCardsFlipped="numCardsFlipped"
-              :boardSetup="boardSetup"
-              @cardFlipped="cardFlipped"
-            ></app-gametile>
-            <div class="gameboard__disabled-tile"></div>
-          </div>
-
-          <h1 v-if="matchesMade === 12">You have won!</h1>
-          <p><strong>matchesMade: </strong> {{ matchesMade }} / 12</p>
-          <p><strong>turnsMade: </strong> {{ turnsMade }}</p>
-
+  <v-app>
+    <v-content>
+      <app-nav @newGameStarted="startNewGame"></app-nav>
+      <div class="container" v-if="gameActive">
+        <div class="gameboard">
+          <app-gametile
+            v-for="kanji in boardSetup"
+            class="gameboard__tile"
+            :key="kanji.id + kanji.type"
+            :kanji="kanji"
+            :gamePhase="gamePhase"
+            :cardsFlipped="cardsFlipped"
+            :numCardsFlipped="numCardsFlipped"
+            :boardSetup="boardSetup"
+            @cardFlipped="cardFlipped"
+          ></app-gametile>
+          <div class="gameboard__disabled-tile"></div>
         </div>
+        <h1 class="indigo--text" v-if="matchesMade === 12">You have won!</h1>
+        <p class="indigo--text title m-0"><strong>Matches: </strong> {{ matchesMade }} / 12</p>
+        <p class="indigo--text title m-0"><strong>Turn: </strong> {{ turnsMade }}</p>
       </div>
-    </div>
-
-  </div>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
@@ -212,23 +205,12 @@ export default {
 
   .gameboard {
     display: flex;
-    margin: 2em auto;
     flex-wrap: wrap;
-    border: 1px solid #c8c8c8;
-    max-width: 750px;
-    box-sizing: content-box;
-    border-radius: 4px;
-  }
-
-  .gameboard__disabled-tile {
-    width: 150px;
-    height: 150px;
-    border: 1px solid #c8c8c8;
-    background-color: #c8c8c8;
-  }
-
-  .gameboard__disabled-tile:hover {
-    cursor: not-allowed;
+    margin: 2em auto;
+    padding: 5px;
+    /* border: 1px solid #c8c8c8; */
+    background-color: #3f51b5;
+    box-sizing: border-box;
   }
 
 </style>

@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueLodash from 'vue-lodash';
 import App from './App.vue';
+import vuetify from './plugins/vuetify';
 
 Vue.config.productionTip = false;
 
@@ -11,5 +12,6 @@ const options = {
 Vue.use(VueLodash, options);
 
 new Vue({
-  render: h => h(App),
+  vuetify,
+  render: h => h(App)
 }).$mount('#app')
