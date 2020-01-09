@@ -41,18 +41,11 @@ export default {
     width: 150px;
     height: 150px;
     border: 1px solid #c8c8c8;
-    font-size: 2em;
+    font-size: 2.5em;
   }
   .gameboard__tile:hover {
     cursor: pointer;
     background-color: #f9f9f9;
-  }
-
-  .fade-enter-active, .fade-leave-active {
-    transition: opacity .5s;
-  }
-  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-    opacity: 0;
   }
 
 </style>

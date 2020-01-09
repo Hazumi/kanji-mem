@@ -7,7 +7,6 @@
         <div class="col-12 text-center">
 
           <div class="gameboard">
-
             <app-gametile
               v-for="kanji in boardSetup"
               class="gameboard__tile"
@@ -20,16 +19,11 @@
               @cardFlipped="cardFlipped"
             ></app-gametile>
             <div class="gameboard__disabled-tile"></div>
-
           </div>
-          <!-- <p><strong>gamePhase: </strong> {{ gamePhase }}</p> -->
-          <!-- <p><strong>numCardsFlipped: </strong> {{ numCardsFlipped }}</p> -->
-          <!-- <p><strong>cardsFlipped: </strong> {{ cardsFlipped }}</p> -->
+
           <h1 v-if="matchesMade === 12">You have won!</h1>
           <p><strong>matchesMade: </strong> {{ matchesMade }} / 12</p>
           <p><strong>turnsMade: </strong> {{ turnsMade }}</p>
-
-          <!-- <p><strong>boardSetup:</strong> {{ boardSetup }}</p> -->
 
         </div>
       </div>
@@ -177,7 +171,7 @@ export default {
           }
         }
         this.gamePhase = 1;
-      }, 3000);
+      }, 7000); // update startNewGame function in Nav comp too
 
     },
     cardFlipped(event) {

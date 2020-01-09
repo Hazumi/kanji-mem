@@ -9,7 +9,11 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <div class="navbar-nav mr-auto">
-          <button class="btn btn-primary" @click="startNewGame">New Game</button>
+          <button
+            class="btn btn-secondary"
+            @click="startNewGame"
+            :disabled="newGameDisabled"
+          >New Game</button>
         </div>
       </div>
     </nav>
@@ -20,9 +24,18 @@
 
 <script>
 export default {
+  data: function() {
+    return {
+      newGameDisabled: false
+    }
+  },
   methods: {
     startNewGame() {
       this.$emit('newGameStarted', true);
+      this.newGameDisabled = true;
+      setTimeout(() => {
+        this.newGameDisabled = false;
+      }, 7000);
     }
   }
 }
