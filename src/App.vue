@@ -4,19 +4,17 @@
     <app-nav @newGameStarted="startNewGame"></app-nav>
     <p>gameActive: {{ gameActive }}</p>
 
-    <div class="container">
+    <div class="container" v-if="gameActive">
       <div class="row">
         <div class="col-12">
 
-          <div class="gameboard" v-if="gameActive">
+          <div class="gameboard">
 
             <app-gametile
               v-for="kanji in boardSetup"
               class="gameboard__tile"
               :key="kanji.id + kanji.type"
-            >
-              <p slot="kanji">{{ kanji }}</p>
-            </app-gametile>
+              :kanji="kanji"></app-gametile>
 
           </div>
 
@@ -42,7 +40,7 @@ export default {
   },
   data: function() {
     return {
-      gameActive: true,
+      gameActive: false,
       kanjiList: [
         {
           id: 1,
@@ -117,18 +115,14 @@ export default {
     generateGameBoard() {
       let kanjiList1 = _.cloneDeep(this.kanjiList);
       let kanjiList2 = _.cloneDeep(this.kanjiList);
-
       for(let kanji of kanjiList1) {
-        kanji.type = 'meaning';
+        kanji.type = 'reading';
       }
-
       for(let kanji of kanjiList2) {
         kanji.type = 'kanji';
       }
-
       kanjiList1 = this.shuffleArray(kanjiList1)
       kanjiList2 = this.shuffleArray(kanjiList2)
-
       this.boardSetup = kanjiList1.concat(kanjiList2);
     },
     shuffleArray(arr) {
