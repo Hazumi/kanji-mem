@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-content>
-      <app-nav @newGameStarted="startNewGame"></app-nav>
+      <app-nav @newGameStarted="startNewGame" :apiKey="apiKey"></app-nav>
       <div class="container" v-if="gameActive">
         <div class="gameboard">
           <app-gametile
@@ -41,6 +41,7 @@ export default {
       cardsFlipped: [],
       matchesMade: 0,
       turnsMade: 0,
+      apiKey: '59e23db7-2a0f-4d0a-8a2c-b6dd003b86bb',
       kanjiList: [
         {
           id: 1,
@@ -142,6 +143,11 @@ export default {
       this.generateGameBoard();
     },
     generateGameBoard() {
+
+      if(this.apiKey) {
+        console.log('test')
+      }
+
       let kanjiList1 = _.cloneDeep(this.kanjiList);
       let kanjiList2 = _.cloneDeep(this.kanjiList);
       for(let kanji of kanjiList1) {
@@ -161,6 +167,7 @@ export default {
         }
         this.gamePhase = 1;
       }, 7000);
+
 
     },
     cardFlipped(event) {

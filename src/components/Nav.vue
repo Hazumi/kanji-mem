@@ -11,7 +11,7 @@
 
     <label class="ml-10">
       WaniKani API Key V2 <small>(read only)</small>
-      <input class="ml-1 input" type="text" value="59e23db7-2a0f-4d0a-8a2c-b6dd003b86bb">
+      <input class="ml-1 input" type="text" v-model="apiKey">
     </label>
 
   </v-toolbar>
@@ -25,6 +25,7 @@ export default {
       newGameDisabled: false
     }
   },
+  props: ['apiKey'],
   methods: {
     startNewGame() {
       this.$emit('newGameStarted', true);
