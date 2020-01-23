@@ -8,6 +8,12 @@
       @click="startNewGame"
       :disabled="newGameDisabled"
     >New Game</v-btn>
+
+    <label class="ml-10">
+      WaniKani API Key V2 <small>(read only)</small>
+      <input class="ml-1 input" type="text" value="59e23db7-2a0f-4d0a-8a2c-b6dd003b86bb">
+    </label>
+
   </v-toolbar>
 
 </template>
@@ -32,4 +38,11 @@ export default {
 </script>
 
 <style lang="css" scoped>
+  .input {
+    background-color: #fff;
+    border-radius: 4px;
+    color: #3f51b5;
+    width: 325px;
+    padding: 0.2em;
+  }
 </style>

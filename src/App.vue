@@ -17,9 +17,6 @@
           ></app-gametile>
           <div class="gameboard__disabled-tile"></div>
         </div>
-        <h1 class="indigo--text" v-if="matchesMade === 12">You have won!</h1>
-        <p class="indigo--text title m-0"><strong>Matches: </strong> {{ matchesMade }} / 12</p>
-        <p class="indigo--text title m-0"><strong>Turn: </strong> {{ turnsMade }}</p>
       </div>
     </v-content>
   </v-app>
@@ -207,7 +204,6 @@ export default {
     flex-wrap: wrap;
     margin: 2em auto;
     padding: 5px;
-    /* border: 1px solid #c8c8c8; */
     width: 100%;
     max-width: 970px;
     background-color: #3f51b5;
