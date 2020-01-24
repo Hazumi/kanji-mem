@@ -1,8 +1,13 @@
 <template>
   <v-app>
     <v-content>
-      <app-nav @newGameStarted="startNewGame" :apiKey="apiKey"></app-nav>
-      <div class="container" v-if="gameActive">
+      <app-nav @newGameStarted="startNewGame" @setApiKey="setApiKey"></app-nav>
+
+      <v-alert v-if="apiError" type="error" dense dismissible color="orange" border="left">
+        Unable to retrieve data from WaniKani.<br> <strong>Please enter a valid WaniKani API key V2.</strong>
+      </v-alert>
+
+      <div class="container" v-if="gameActive && !apiError">
         <div class="gameboard">
           <app-gametile
             v-for="kanji in boardSetup"
@@ -18,6 +23,7 @@
           <div class="gameboard__disabled-tile"></div>
         </div>
       </div>
+
     </v-content>
   </v-app>
 </template>
@@ -41,7 +47,6 @@ export default {
       cardsFlipped: [],
       matchesMade: 0,
       turnsMade: 0,
-      apiKey: '59e23db7-2a0f-4d0a-8a2c-b6dd003b86bb',
       kanjiList: [
         {
           id: 1,
@@ -129,27 +134,110 @@ export default {
         }
       ],
       boardSetup: [],
+      apiKey: '',
+      apiKeyValid: false,
+      apiError: false,
+      userLvl: '',
+      apiKanjiList: []
     }
   },
   methods: {
     startNewGame() {
       this.gameActive = true;
+      this.apiError = false;
       this.gamePhase = 0;
       this.gamePhase = 0;
       this.numCardsFlipped = 0;
       this.matchesMade = 0;
       this.turnsMade = 0;
       this.cardsFlipped = [];
+      this.apiKanjiList = [];
       this.generateGameBoard();
     },
     generateGameBoard() {
 
       if(this.apiKey) {
-        console.log('test')
+        const url = 'https://api.wanikani.com/v2/level_progressions';
+        fetch(url, {
+          headers: {
+            Authorization: `Bearer ${this.apiKey}`
+          }
+        })
+          .then(res => res.json())
+          .then(res => {
+            this.userLvl = res.data[res.data.length - 1].data.level;
+          })
+          .catch(() => {
+            console.log('wuh oh');
+            this.apiError = true;
+          }) // then
+
+          .finally(() => {
+            // const url = `https://api.wanikani.com/v2/subjects?levels=${this.userLvl}`;
+            const url = `https://api.wanikani.com/v2/subjects?levels=3`;
+            fetch(url, {
+              headers: {
+                Authorization: `Bearer ${this.apiKey}`
+              }
+            })
+            .then(res => res.json())
+            .then(res => {
+
+              const kanjiData = res.data.filter(obj => {
+                return obj.object === 'kanji';
+              });
+
+              const kanjiIndexArr = [];
+              while(kanjiIndexArr.length < 12) {
+                let newNum = Math.floor(Math.random() * kanjiData.length);
+                if(!kanjiIndexArr.includes(newNum)) {
+                  kanjiIndexArr.push(newNum);
+                }
+              }
+
+              let idCounter = 1;
+              for(let index of kanjiIndexArr) {
+
+                let newKanji = {
+                  id: idCounter,
+                  show: true,
+                  matched: false
+                };
+
+                newKanji.kanji = kanjiData[index].data.characters;
+
+                var readingsArr = kanjiData[index].data.readings;
+
+                for(let singleReading of readingsArr) {
+                  if(singleReading.primary) {
+                    // console.log('reading', singleReading.reading);
+                    newKanji.reading = singleReading.reading
+                    break;
+                  }
+                }
+                this.apiKanjiList.push(newKanji)
+                idCounter += 1;
+              }
+
+              let kanjiList1 = _.cloneDeep(this.apiKanjiList);
+              let kanjiList2 = _.cloneDeep(this.apiKanjiList);
+
+              this.genKanjiList(kanjiList1, kanjiList2);
+
+            })
+
+
+          }) // finally
+
+      } else {
+        let kanjiList1 = _.cloneDeep(this.kanjiList);
+        let kanjiList2 = _.cloneDeep(this.kanjiList);
+        this.genKanjiList(kanjiList1, kanjiList2);
       }
 
-      let kanjiList1 = _.cloneDeep(this.kanjiList);
-      let kanjiList2 = _.cloneDeep(this.kanjiList);
+    },
+    genKanjiList(kanjiList1, kanjiList2) {
+
       for(let kanji of kanjiList1) {
         kanji.type = 'reading';
       }
@@ -167,7 +255,6 @@ export default {
         }
         this.gamePhase = 1;
       }, 7000);
-
 
     },
     cardFlipped(event) {
@@ -192,6 +279,9 @@ export default {
         }, 1250);
 
       }
+    },
+    setApiKey(key) {
+      this.apiKey = key;
     },
     shuffleArray(arr) {
       for (let i = arr.length - 1; i > 0; i--) {

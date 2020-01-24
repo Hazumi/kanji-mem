@@ -1,6 +1,6 @@
 <template lang="html">
 
-  <v-toolbar app color="indigo" dark>
+  <v-toolbar dark color="indigo">
     <h1>漢字mem</h1>
     <v-btn
       color="white"
@@ -11,7 +11,7 @@
 
     <label class="ml-10">
       WaniKani API Key V2 <small>(read only)</small>
-      <input class="ml-1 input" type="text" v-model="apiKey">
+      <input class="ml-1 input" type="text" @input="setApiKey">
     </label>
 
   </v-toolbar>
@@ -33,6 +33,9 @@ export default {
       setTimeout(() => {
         this.newGameDisabled = false;
       }, 7000);
+    },
+    setApiKey(event) {
+      this.$emit('setApiKey', event.target.value);
     }
   }
 }
