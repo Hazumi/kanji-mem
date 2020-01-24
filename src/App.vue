@@ -168,13 +168,12 @@ export default {
             this.userLvl = res.data[res.data.length - 1].data.level;
           })
           .catch(() => {
-            console.log('wuh oh');
             this.apiError = true;
           }) // then
 
           .finally(() => {
-            // const url = `https://api.wanikani.com/v2/subjects?levels=${this.userLvl}`;
-            const url = `https://api.wanikani.com/v2/subjects?levels=3`;
+            let level = Math.floor(Math.random() * this.userLvl) + 1;
+            const url = `https://api.wanikani.com/v2/subjects?levels=${level}`;
             fetch(url, {
               headers: {
                 Authorization: `Bearer ${this.apiKey}`
@@ -210,7 +209,6 @@ export default {
 
                 for(let singleReading of readingsArr) {
                   if(singleReading.primary) {
-                    // console.log('reading', singleReading.reading);
                     newKanji.reading = singleReading.reading
                     break;
                   }
@@ -223,12 +221,8 @@ export default {
               let kanjiList2 = _.cloneDeep(this.apiKanjiList);
 
               this.genKanjiList(kanjiList1, kanjiList2);
-
             })
-
-
-          }) // finally
-
+          })
       } else {
         let kanjiList1 = _.cloneDeep(this.kanjiList);
         let kanjiList2 = _.cloneDeep(this.kanjiList);
